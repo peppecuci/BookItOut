@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/book_it_out
+    username: postgres
+    password: outofmind
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+
+application:
+  #jwt:
+    #expiresAt: 846_000
+    #headerPrefix: "Bearer "
+    #secret: "1234"
+    #headerKey: "Authorization"
