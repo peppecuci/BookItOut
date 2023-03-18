@@ -3,7 +3,7 @@ package com.bruxelles.bookitout.models.forms;
 import lombok.Data;
 
 @Data
-public class UzerForm {
+public class UserForm {
 
     private String name;
     private String lastname;

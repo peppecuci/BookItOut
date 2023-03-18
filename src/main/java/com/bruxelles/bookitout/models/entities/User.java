@@ -15,12 +15,13 @@ import java.util.List;
 @Entity
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
-public class Uzer implements UserDetails {
+@Table(name = "\"User\"")
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "uzer_id")
-    private Long uzerId;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -31,7 +32,7 @@ public class Uzer implements UserDetails {
     @Column(name = "mail")
     private String mail;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -42,7 +43,7 @@ public class Uzer implements UserDetails {
     private Address address;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_uzer_id")
+    @JoinColumn(name = "fk_user_id")
     private List<Reservation> reservation;
 
     @Override
@@ -55,10 +56,6 @@ public class Uzer implements UserDetails {
         return null;
     }
 
-    @Override
-    public String getUsername() {
-        return null;
-    }
 
     @Override
     public boolean isAccountNonExpired() {

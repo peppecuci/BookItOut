@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer extends Uzer{
+public class Customer extends User{
 
     //BADGE IS GIVEN CONSIDERING THE NUMBER OF TIME YOU BOOK IN THE WEBSITE:
     //0 -> 4 = NOVICE

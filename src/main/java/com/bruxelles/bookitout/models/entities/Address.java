@@ -31,6 +31,6 @@ public class Address {
     private String city;
 
     @OneToOne(mappedBy = "address")
-    private Uzer uzer;
+    private User user;
 
 }

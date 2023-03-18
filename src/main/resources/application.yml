@@ -15,8 +15,8 @@ spring:
     database: postgresql
 
 application:
-  #jwt:
-    #expiresAt: 846_000
-    #headerPrefix: "Bearer "
-    #secret: "1234"
-    #headerKey: "Authorization"
+  jwt:
+    expiresAt: 846_000
+    headerPrefix: "Bearer "
+    secret: "1234"
+    headerKey: "Authorization"
