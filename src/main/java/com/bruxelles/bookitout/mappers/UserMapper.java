@@ -1,8 +1,9 @@
 package com.bruxelles.bookitout.mappers;
 
 import com.bruxelles.bookitout.models.dtos.UserDto;
+import com.bruxelles.bookitout.models.entities.Address;
 import com.bruxelles.bookitout.models.entities.User;
-import com.bruxelles.bookitout.models.forms.UserForm;
+import com.bruxelles.bookitout.models.forms.UserCreateForm;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,19 +15,27 @@ public class UserMapper {
         this.addressMapper = addressMapper;
     }
 
-    public User toEntity(UserForm userForm){
 
-        if(userForm == null)
+    public User toEntity(UserCreateForm form){
+
+        if(form == null)
             return null;
 
         User user = new User();
-        //TODO Address address = new Address();
+        Address address = new Address();
 
-        user.setName(userForm.getName());
-        user.setLastname(userForm.getLastname());
-        user.setMail(userForm.getMail());
-        user.setUsername(userForm.getUsername());
-        System.out.println(user.getUsername());
+        user.setName(form.getName());
+        user.setLastname(form.getLastname());
+        user.setMail(form.getMail());
+        user.setUsername(form.getUsername());
+        user.setPassword(form.getPassword());
+
+        address.setNum(form.getAddress().getNum());
+        address.setStreet(form.getAddress().getStreet());
+        address.setZipCode(form.getAddress().getZipCode());
+        address.setCity(form.getAddress().getCity());
+
+        user.setAddress(address);
 
         return user;
     }
@@ -41,8 +50,9 @@ public class UserMapper {
                 .name(entity.getName())
                 .lastname(entity.getLastname())
                 .mail(entity.getMail())
-                .username(entity.getUsername()) //todo check postman http request GETONE (username == null), why is that???
-                //.addressDto(addressMapper.toDto(entity.getAddress()))
+                .username(entity.getUsername())
+                .password(entity.getPassword())
+                .addressDto(addressMapper.toDto(entity.getAddress()))
                 .build();
 
     }

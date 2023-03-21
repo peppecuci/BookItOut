@@ -8,17 +8,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddressMapper {
 
-    public Address toEntity(AddressForm addressForm){
+    public Address toEntity(AddressForm form){
 
-        if(addressForm == null)
+        if(form == null)
             return null;
 
         Address address = new Address();
 
-        address.setNum(address.getNum());
-        address.setStreet(address.getStreet());
-        address.setZipCode(address.getZipCode());
-        address.setCity(address.getCity());
+        address.setNum(form.getNum());
+        address.setStreet(form.getStreet());
+        address.setZipCode(form.getZipCode());
+        address.setCity(form.getCity());
 
         return address;
 

@@ -3,8 +3,10 @@ package com.bruxelles.bookitout.services.implementations;
 import com.bruxelles.bookitout.exceptions.ElementNotFoundException;
 import com.bruxelles.bookitout.mappers.UserMapper;
 import com.bruxelles.bookitout.models.dtos.UserDto;
+import com.bruxelles.bookitout.models.entities.Address;
 import com.bruxelles.bookitout.models.entities.User;
-import com.bruxelles.bookitout.models.forms.UserForm;
+import com.bruxelles.bookitout.models.forms.UserCreateForm;
+import com.bruxelles.bookitout.repositories.AddressRepository;
 import com.bruxelles.bookitout.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,20 +20,24 @@ public class UserServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final AddressRepository addressRepository;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, AddressRepository addressRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.addressRepository = addressRepository;
     }
 
-    public UserDto create(UserForm toInsert) {
+    public UserDto create(UserCreateForm toInsert) {
 
         if(toInsert == null) {
             throw new IllegalArgumentException("user to insert can't be null");
         }
-        System.out.println(toInsert);
+
         User user = userMapper.toEntity(toInsert);
-        //todo addressRepository.save(client.getAddress());
+
+        addressRepository.save(user.getAddress());
+
         return userMapper.toDto(userRepository.save(user));
 
     }
@@ -56,12 +62,12 @@ public class UserServiceImpl implements UserDetailsService {
                 .toList();
     }
 
-    public UserDto update(UserForm toUpdate, Long id) {
+    public UserDto update(UserCreateForm toUpdate, Long id) {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ElementNotFoundException(User.class, id));
 
-        //todo add Address address = new Address;
+        Address address = new Address();
 
         if(toUpdate.getName() != null)
             user.setName(toUpdate.getName());

@@ -9,7 +9,7 @@ public class AddressDto {
 
     private String num;
     private String street;
-    private int zipCode;
+    private Integer zipCode;
     private String city;
 
 }
