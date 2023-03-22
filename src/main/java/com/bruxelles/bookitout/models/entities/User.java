@@ -1,6 +1,7 @@
 package com.bruxelles.bookitout.models.entities;
 
 
+import com.bruxelles.bookitout.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,8 +28,8 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "firstname")
+    private String firstname;
 
     @Column(name = "lastname")
     private String lastname;
@@ -42,8 +43,8 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = List.of("CLIENT");
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_address_id")
@@ -53,32 +54,39 @@ public class User implements UserDetails {
     @JoinColumn(name = "fk_user_id")
     private List<Reservation> reservation;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .map((role) -> new SimpleGrantedAuthority("ROLE" + role))
-                .collect(Collectors.toList());
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public String getPassword(){
+        return password;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return isEnabled();
+        return true;
     }
 
 
     @Override
     public boolean isAccountNonLocked() {
-        return isEnabled();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return isEnabled();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return true;
     }
 }

@@ -67,6 +67,7 @@ public class UserController {
         Authentication auth = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(form.getUsername(), form.getPassword()));
 
+
         return new TokenDto(jwtProvider.createToken(auth));
 
     }
