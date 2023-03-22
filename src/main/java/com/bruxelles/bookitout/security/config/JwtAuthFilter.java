@@ -1,14 +1,11 @@
 package com.bruxelles.bookitout.security.config;
 
 import com.bruxelles.bookitout.security.token.TokenRepository;
-import com.bruxelles.bookitout.utils.JwtProvider;
 
-import com.bruxelles.bookitout.utils.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 

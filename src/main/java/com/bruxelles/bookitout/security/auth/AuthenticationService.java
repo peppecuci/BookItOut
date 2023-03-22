@@ -2,11 +2,12 @@ package com.bruxelles.bookitout.security.auth;
 
 import com.bruxelles.bookitout.enums.Role;
 import com.bruxelles.bookitout.models.entities.User;
+import com.bruxelles.bookitout.models.forms.UserCreateForm;
 import com.bruxelles.bookitout.repositories.UserRepository;
+import com.bruxelles.bookitout.security.config.JwtService;
 import com.bruxelles.bookitout.security.token.Token;
 import com.bruxelles.bookitout.security.token.TokenRepository;
 import com.bruxelles.bookitout.security.token.TokenType;
-import com.bruxelles.bookitout.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,12 +23,14 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(UserCreateForm request) {
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
-                .email(request.getEmail())
+                .mail(request.getMail())
+                .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .address(request.getAddress())
                 .role(Role.USER)
                 .build();
         var savedUser = repository.save(user);

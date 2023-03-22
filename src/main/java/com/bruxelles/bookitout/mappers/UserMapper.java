@@ -24,7 +24,7 @@ public class UserMapper {
         User user = new User();
         Address address = new Address();
 
-        user.setName(form.getName());
+        user.setFirstname(form.getFirstname());
         user.setLastname(form.getLastname());
         user.setMail(form.getMail());
         user.setUsername(form.getUsername());
@@ -47,12 +47,12 @@ public class UserMapper {
 
         return UserDto.builder()
                 .id(entity.getId())
-                .name(entity.getName())
+                .firstname(entity.getFirstname())
                 .lastname(entity.getLastname())
                 .mail(entity.getMail())
                 .username(entity.getUsername())
                 .password(entity.getPassword())
-                .addressDto(addressMapper.toDto(entity.getAddress()))
+                .address(addressMapper.toDto(entity.getAddress()))
                 .build();
 
     }

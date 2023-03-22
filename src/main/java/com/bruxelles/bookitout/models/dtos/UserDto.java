@@ -9,11 +9,11 @@ import lombok.Data;
 public class UserDto {
 
     private Long id;
-    private String name;
+    private String firstname;
     private String lastname;
     private String mail;
     private String username;
     private String password;
-    private AddressDto addressDto;
+    private AddressDto address;
 
 }

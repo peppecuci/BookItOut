@@ -17,9 +17,9 @@ spring:
       hibernate:
         format_sql: true
 
-application:
-  jwt:
-    expiresAt: 846_000
-    headerPrefix: "Bearer "
-    secret: "1234"
-    headerKey: "Authorization"
+#application:
+ # jwt:
+ #   expiresAt: 846_000
+ #   headerPrefix: "Bearer "
+ #   secret: "1234"
+ #   headerKey: "Authorization"

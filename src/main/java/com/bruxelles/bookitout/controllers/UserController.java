@@ -1,14 +1,12 @@
 package com.bruxelles.bookitout.controllers;
 
-import com.bruxelles.bookitout.models.dtos.TokenDto;
 import com.bruxelles.bookitout.models.dtos.UserDto;
 import com.bruxelles.bookitout.models.forms.UserCreateForm;
-import com.bruxelles.bookitout.models.forms.UserLoginForm;
+import com.bruxelles.bookitout.security.auth.AuthenticationRequest;
+import com.bruxelles.bookitout.security.auth.AuthenticationResponse;
+import com.bruxelles.bookitout.security.auth.AuthenticationService;
 import com.bruxelles.bookitout.services.implementations.UserServiceImpl;
-import com.bruxelles.bookitout.utils.JwtProvider;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,22 +17,32 @@ import java.util.List;
 public class UserController {
 
     private final UserServiceImpl userService;
-    private final AuthenticationManager authenticationManager;
-    private final JwtProvider jwtProvider;
 
-    public UserController(UserServiceImpl userService, AuthenticationManager authenticationManager, JwtProvider jwtProvider) {
+    public UserController(UserServiceImpl userService, AuthenticationService service) {
         this.userService = userService;
-        this.authenticationManager = authenticationManager;
-        this.jwtProvider = jwtProvider;
+        this.service = service;
+    }
+    private final AuthenticationService service;
+    //CRUD
+    @PostMapping("/sign-in")
+    public ResponseEntity<AuthenticationResponse> register(
+            @RequestBody UserCreateForm request
+    ) {
+        return ResponseEntity.ok(service.register(request));
     }
 
-    //CRUD
+    @PostMapping("/log-in")
+    public ResponseEntity<AuthenticationResponse> authenticate(
+            @RequestBody AuthenticationRequest request
+    ) {
+        return ResponseEntity.ok(service.authenticate(request));
+    }
 
     //CREATE
-    @PostMapping("/register")
+    /*@PostMapping("/register")
     public void createUser(@RequestBody UserCreateForm userForm) {
         userService.create(userForm);
-    }
+    }*/
 
     //READ
     @GetMapping("/{id:[0-9]+}")
@@ -55,21 +63,13 @@ public class UserController {
 
 
     //DELETE
+    //TODO Method currently not working. Need to fix it
     @DeleteMapping("/delete/{id:[0-9]+}")
     public void delete(@PathVariable Long id) {
         userService.delete(id);
     }
 
     //LOGIN
-    @PostMapping("/login")
-    public TokenDto login(@RequestBody UserLoginForm form){
 
-        Authentication auth = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(form.getUsername(), form.getPassword()));
-
-
-        return new TokenDto(jwtProvider.createToken(auth));
-
-    }
 
 }

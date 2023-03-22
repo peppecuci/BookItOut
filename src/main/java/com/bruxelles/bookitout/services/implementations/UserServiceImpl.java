@@ -69,8 +69,8 @@ public class UserServiceImpl implements UserDetailsService {
 
         Address address = new Address();
 
-        if(toUpdate.getName() != null)
-            user.setName(toUpdate.getName());
+        if(toUpdate.getFirstname() != null)
+            user.setFirstname(toUpdate.getFirstname());
         if(toUpdate.getLastname() != null)
             user.setLastname(toUpdate.getLastname());
         if(toUpdate.getMail() != null)
@@ -78,7 +78,18 @@ public class UserServiceImpl implements UserDetailsService {
         if(toUpdate.getUsername() != null)
             user.setUsername(toUpdate.getUsername());
 
+        if(user.getAddress().getNum() != null)
+            user.getAddress().setNum(toUpdate.getAddress().getNum());
+        if(user.getAddress().getStreet() != null)
+            user.getAddress().setStreet(toUpdate.getAddress().getStreet());
+        if(user.getAddress().getZipCode() != null)
+            user.getAddress().setZipCode(toUpdate.getAddress().getZipCode());
+        if(user.getAddress().getCity() != null)
+            user.getAddress().setCity(toUpdate.getAddress().getCity());
+
+
         user = userRepository.save(user);
+        addressRepository.save(address);
 
         return userMapper.toDto(user);
     }

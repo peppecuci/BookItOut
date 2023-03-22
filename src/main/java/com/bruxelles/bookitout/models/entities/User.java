@@ -2,23 +2,18 @@ package com.bruxelles.bookitout.models.entities;
 
 
 import com.bruxelles.bookitout.enums.Role;
+import com.bruxelles.bookitout.security.token.Token;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.enabled;
-
+@Data
+@Builder
 @Entity
-@Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
 @Table(name = "\"User\"")
 public class User implements UserDetails {
@@ -45,6 +40,10 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+
+    private List<Token> tokens;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_address_id")
