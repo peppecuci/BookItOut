@@ -2,7 +2,7 @@ package com.bruxelles.bookitout.controllers;
 
 import com.bruxelles.bookitout.models.dtos.AddressDto;
 import com.bruxelles.bookitout.models.forms.AddressForm;
-import com.bruxelles.bookitout.services.AddressService;
+import com.bruxelles.bookitout.services.implementations.AddressService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

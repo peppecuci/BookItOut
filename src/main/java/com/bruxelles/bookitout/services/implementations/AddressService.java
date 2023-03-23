@@ -1,4 +1,4 @@
-package com.bruxelles.bookitout.services;
+package com.bruxelles.bookitout.services.implementations;
 
 import com.bruxelles.bookitout.exceptions.ElementNotFoundException;
 import com.bruxelles.bookitout.mappers.AddressMapper;

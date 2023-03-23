@@ -18,14 +18,15 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long reservationId;
+    private Long id;
 
-    @Column(name = "dateOfReservation")
+    @Column(name = "date_of_reservation")
     private DateFormat dateOfReservation;
 
-    @Column(name = "hourOfReservation")
+    @Column(name = "hour_of_reservation")
     private ServiceHourOptions hourOfReservation;
 
+    //THAT VARIABLE INDICATES IF THE CUSTOMER HAS ANY SPECIAL REQUEST, FOR EXAMPLE "A QUIET TABLE FOR A BUSINESS DINNER"
     @Column(name = "special_request")
     private String specialRequest;
 
