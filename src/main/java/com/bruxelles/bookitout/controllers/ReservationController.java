@@ -3,9 +3,10 @@ package com.bruxelles.bookitout.controllers;
 import com.bruxelles.bookitout.models.dtos.ReservationDto;
 import com.bruxelles.bookitout.models.forms.ReservationForm;
 import com.bruxelles.bookitout.services.implementations.ReservationService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
+import java.sql.Date;
 import java.util.List;
 
 @RequestMapping("/reservation")
@@ -33,12 +34,13 @@ public class ReservationController {
         return service.getAll();
     }
 
-    @GetMapping("/all-by-date")
-    public List<ReservationDto> getAllByDateOfReservation(@PathVariable DateFormat dateOfReservation) {
-        return service.getAllByDateOfReservation(dateOfReservation);
+    @GetMapping("/all-by-date/{date}")
+    public List<ReservationDto> getAllByDateOfReservation(@PathVariable Date date) {
+        return service.getAllByReservationDateTime(date);
     }
 
-    @PatchMapping("/update")
+    //TODO not working. 403 error.
+    @PatchMapping("{id:[0:9]+1}")
     public ReservationDto update(@RequestBody ReservationForm form, @PathVariable Long id){
         return service.update(form, id);
     }

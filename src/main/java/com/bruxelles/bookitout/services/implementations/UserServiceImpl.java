@@ -8,6 +8,8 @@ import com.bruxelles.bookitout.models.entities.User;
 import com.bruxelles.bookitout.models.forms.UserCreateForm;
 import com.bruxelles.bookitout.repositories.AddressRepository;
 import com.bruxelles.bookitout.repositories.UserRepository;
+import com.bruxelles.bookitout.security.token.Token;
+import com.bruxelles.bookitout.security.token.TokenRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,11 +23,14 @@ public class UserServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final AddressRepository addressRepository;
+    private final TokenRepository tokenRepository;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, AddressRepository addressRepository) {
+
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, AddressRepository addressRepository, TokenRepository tokenRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.addressRepository = addressRepository;
+        this.tokenRepository = tokenRepository;
     }
 
     public UserDto create(UserCreateForm toInsert) {
@@ -94,12 +99,18 @@ public class UserServiceImpl implements UserDetailsService {
         return userMapper.toDto(user);
     }
 
+    //TODO method not working
     public void delete(Long id) {
+
+        List<Token> token = tokenRepository.findAllValidTokenByUser(id);
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ElementNotFoundException(User.class, id));
 
+        tokenRepository.deleteAll(token);
+
         userRepository.delete(user);
+
 
     }
 }

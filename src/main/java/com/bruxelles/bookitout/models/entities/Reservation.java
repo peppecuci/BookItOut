@@ -1,13 +1,14 @@
 package com.bruxelles.bookitout.models.entities;
 
-import com.bruxelles.bookitout.enums.ServiceHourOptions;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.text.DateFormat;
+import java.sql.Date;
 
 @Entity
 @Getter @Setter
@@ -20,11 +21,10 @@ public class Reservation {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "date_of_reservation")
-    private DateFormat dateOfReservation;
-
-    @Column(name = "hour_of_reservation")
-    private ServiceHourOptions hourOfReservation;
+    //@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", shape = JsonFormat.Shape.STRING)
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
+    @Column(name = "reservation_date_time")
+    private Date reservationDateTime;
 
     //THAT VARIABLE INDICATES IF THE CUSTOMER HAS ANY SPECIAL REQUEST, FOR EXAMPLE "A QUIET TABLE FOR A BUSINESS DINNER"
     @Column(name = "special_request")

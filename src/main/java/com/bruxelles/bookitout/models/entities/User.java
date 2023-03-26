@@ -41,8 +41,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
-
+    @OneToMany(mappedBy = "userId")
     private List<Token> tokens;
 
     @OneToOne(cascade = CascadeType.ALL)

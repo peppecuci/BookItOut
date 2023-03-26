@@ -15,8 +15,7 @@ public class ReservationMapper {
 
         Reservation reservation = new Reservation();
 
-        reservation.setDateOfReservation(form.getDateOfReservation());
-        reservation.setHourOfReservation(form.getHourOfReservation());
+        reservation.setReservationDateTime(form.getReservationDateTime());
         reservation.setSpecialRequest(form.getSpecialRequest());
 
         return reservation;
@@ -29,8 +28,7 @@ public class ReservationMapper {
 
         return ReservationDto.builder()
                 .id(entity.getId())
-                .dateOfReservation(entity.getDateOfReservation())
-                .hourOfReservation(entity.getHourOfReservation())
+                .reservationDateTime(entity.getReservationDateTime())
                 .specialRequest(entity.getSpecialRequest())
                 .build();
 

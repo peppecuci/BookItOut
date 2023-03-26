@@ -5,6 +5,7 @@ import com.bruxelles.bookitout.models.forms.UserCreateForm;
 import com.bruxelles.bookitout.security.auth.AuthenticationRequest;
 import com.bruxelles.bookitout.security.auth.AuthenticationResponse;
 import com.bruxelles.bookitout.security.auth.AuthenticationService;
+import com.bruxelles.bookitout.security.token.TokenRepository;
 import com.bruxelles.bookitout.services.implementations.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,18 +32,13 @@ public class UserController {
         return ResponseEntity.ok(service.register(request));
     }
 
+    //LOGIN method
     @PostMapping("/log-in")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
         return ResponseEntity.ok(service.authenticate(request));
     }
-
-    //CREATE
-    /*@PostMapping("/register")
-    public void createUser(@RequestBody UserCreateForm userForm) {
-        userService.create(userForm);
-    }*/
 
     //READ
     @GetMapping("/{id:[0-9]+}")
@@ -56,14 +52,13 @@ public class UserController {
     }
 
     //UPDATE
-    @PatchMapping("/{id:[0-9]+}")
+    @PatchMapping("update/{id:[0-9]+}")
     public UserDto update(@RequestBody UserCreateForm toUpdate, @PathVariable Long id) {
         return userService.update(toUpdate, id);
     }
 
 
     //DELETE
-    //TODO Method currently not working. Need to fix it
     @DeleteMapping("/delete/{id:[0-9]+}")
     public void delete(@PathVariable Long id) {
         userService.delete(id);

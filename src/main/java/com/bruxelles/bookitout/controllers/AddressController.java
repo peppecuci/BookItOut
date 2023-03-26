@@ -40,14 +40,14 @@ public class AddressController {
 
     }
 
-    @PatchMapping("/{id:[0-9]+}")
+    @PatchMapping("update/{id:[0-9]+}")
     public AddressDto update(@RequestBody AddressForm form,@PathVariable Long id){
 
         return service.update(form, id);
 
     }
 
-    @DeleteMapping("{id:[0-9]+}")
+    @DeleteMapping("delete/{id:[0-9]+}")
     public void delete(@PathVariable Long id){
 
         service.delete(id);

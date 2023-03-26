@@ -5,9 +5,8 @@ import lombok.Data;
 import java.sql.Date;
 
 @Data
-public class ReservationForm {
+public class ReservationOnlyDateTimeForm {
 
     private Date reservationDateTime;
-    private String specialRequest;
 
 }

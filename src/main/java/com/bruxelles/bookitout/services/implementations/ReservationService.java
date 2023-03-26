@@ -8,7 +8,7 @@ import com.bruxelles.bookitout.models.forms.ReservationForm;
 import com.bruxelles.bookitout.repositories.ReservationRepository;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +28,7 @@ public class ReservationService {
         if(toInsert == null)
             throw new IllegalArgumentException("Reservation to insert cannot be null");
 
-        Reservation reservation = new Reservation();
+        Reservation reservation = mapper.toEntity(toInsert);
 
         return mapper.toDto(repository.save(reservation));
 
@@ -53,11 +53,12 @@ public class ReservationService {
     }
 
     //Method that give all the reservations of a specific date.
-    public List<ReservationDto> getAllByDateOfReservation(DateFormat dateOfReservation) {
-        if(dateOfReservation == null)
+    //TODO method don't working. To fix.
+    public List<ReservationDto> getAllByReservationDateTime(Date reservationDateTime) {
+        if(reservationDateTime == null)
             throw new IllegalArgumentException("date of reservation cannot be null");
 
-        return repository.findReservationByDateOfReservation(dateOfReservation)
+        return repository.findReservationByReservationDateTime(reservationDateTime)
                 .stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
@@ -78,10 +79,10 @@ public class ReservationService {
         Reservation reservation = repository.findById(id)
                 .orElseThrow(() -> new ElementNotFoundException(Reservation.class, id));
 
-        if(toUpdate.getDateOfReservation() != null)
-            reservation.setDateOfReservation(toUpdate.getDateOfReservation());
-        if(toUpdate.getHourOfReservation() != null)
-            reservation.setHourOfReservation(toUpdate.getHourOfReservation());
+        if(toUpdate.getReservationDateTime() != null)
+            reservation.setReservationDateTime(toUpdate.getReservationDateTime());
+        if(toUpdate.getReservationDateTime() != null)
+            reservation.setReservationDateTime(toUpdate.getReservationDateTime());
         if(toUpdate.getSpecialRequest() != null)
             reservation.setSpecialRequest(toUpdate.getSpecialRequest());
 
