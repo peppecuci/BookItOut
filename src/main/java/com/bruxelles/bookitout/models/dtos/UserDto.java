@@ -14,6 +14,7 @@ public class UserDto {
     private String mail;
     private String username;
     private String password;
+    private boolean enabled;
     private AddressDto address;
 
 }

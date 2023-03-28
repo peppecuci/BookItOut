@@ -99,7 +99,29 @@ public class UserServiceImpl implements UserDetailsService {
         return userMapper.toDto(user);
     }
 
-    //TODO method not working
+    public UserDto disable(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow( ()-> new ElementNotFoundException(User.class, id) );
+
+        user.setEnabled(false);
+
+        userRepository.save(user);
+
+        return userMapper.toDto(user);
+
+    }
+
+    public UserDto enable(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow( () -> new ElementNotFoundException(User.class, id));
+
+        user.setEnabled(true);
+        userRepository.save(user);
+
+        return userMapper.toDto(user);
+
+    }
+
     public void delete(Long id) {
 
         List<Token> token = tokenRepository.findAllValidTokenByUser(id);

@@ -52,6 +52,7 @@ public class UserMapper {
                 .mail(entity.getMail())
                 .username(entity.getUsername())
                 .password(entity.getPassword())
+                .enabled(entity.isEnabled())
                 .address(addressMapper.toDto(entity.getAddress()))
                 .build();
 

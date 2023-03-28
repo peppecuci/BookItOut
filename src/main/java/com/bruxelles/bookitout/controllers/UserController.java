@@ -8,6 +8,7 @@ import com.bruxelles.bookitout.security.auth.AuthenticationService;
 import com.bruxelles.bookitout.security.token.TokenRepository;
 import com.bruxelles.bookitout.services.implementations.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +56,16 @@ public class UserController {
     @PatchMapping("update/{id:[0-9]+}")
     public UserDto update(@RequestBody UserCreateForm toUpdate, @PathVariable Long id) {
         return userService.update(toUpdate, id);
+    }
+
+    @PatchMapping("disable/{id:[0-9]+}")
+    public UserDto disable(@PathVariable Long id) {
+        return userService.disable(id);
+    }
+
+    @PatchMapping("enable/{id:[0-9]+}")
+    public UserDto enable(@PathVariable Long id) {
+        return userService.enable(id);
     }
 
 

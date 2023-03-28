@@ -39,8 +39,7 @@ public class ReservationController {
         return service.getAllByReservationDateTime(date);
     }
 
-    //TODO not working. 403 error.
-    @PatchMapping("{id:[0:9]+1}")
+    @PatchMapping("update/{id:[0-9]+}")
     public ReservationDto update(@RequestBody ReservationForm form, @PathVariable Long id){
         return service.update(form, id);
     }

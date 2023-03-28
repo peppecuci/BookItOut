@@ -4,6 +4,7 @@ package com.bruxelles.bookitout.models.entities;
 import com.bruxelles.bookitout.enums.Role;
 import com.bruxelles.bookitout.security.token.Token;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.AssertTrue;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,8 +42,13 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+
+    @Column(name = "enabled")
+    private boolean enabled;
+
     @OneToMany(mappedBy = "userId")
     private List<Token> tokens;
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_address_id")
@@ -85,6 +91,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }
